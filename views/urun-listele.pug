@@ -1,0 +1,128 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Ürün Listesi - E-Ticaret
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      .alert {
+        background-color: #28a745;
+        color: white;
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .alert button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #222;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 30px;
+      }
+      th, td {
+        padding: 12px;
+        text-align: left;
+        border: 1px solid #ddd;
+      }
+      th {
+        background-color: #333;
+        color: white;
+        font-weight: bold;
+      }
+      tr:hover {
+        background-color: #f1f1f1;
+      }
+      td.text-danger {
+        color: red;
+        font-weight: bold;
+      }
+      td img {
+        width: 50px;
+        height: 50px;
+        object-fit: cover;
+      }
+     
+      .btn-sm {
+        padding: 5px 10px;
+      }
+      .d-flex {
+        display: flex;
+        gap: 10px;
+      }
+
+  body
+    // Navbar
+    .navbar
+      ul 
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px")
+        li 
+          a(href="/admin-home-page") Admin Home Page
+        li
+          a(href="/urun-ekle") Ürün Ekle
+
+    // Success Message
+    .container-fluid
+      if success
+        .alert
+          | Ürün başarıyla eklendi!
+          button(type="button") X
+
+    // Ürün Listesi
+    .container.my-5
+      h2 Ürün Listesi
+      table
+        thead
+          tr
+            th ID
+            th Açıklama
+            th Marka
+            th Model
+            th Kategori
+            th Fiyat
+            th İndirimli
+            th Stok
+            th Resim
+            th Tedarikçi
+            th İşlemler
+        tbody
+          each urun in urunler
+            tr
+              td= urun.urun_id
+              td= urun.urun_aciklama
+              td= urun.marka_adi
+              td= urun.model_adi
+              td= urun.kategori_adi
+              td= `${urun.urun_fiyati} ₺`
+              td= urun.indirimli_fiyat ? `${urun.indirimli_fiyat} ₺` : '-'
+              td(class=urun.stok_miktari <= 5 ? 'text-danger' : '')= urun.stok_miktari
+              td
+                if urun.urun_resim_url
+                  a(href=urun.urun_resim_url, target="_blank")
+                    img(src=urun.urun_resim_url, alt="Ürün Resmi")
+                else
+                  span.text-muted Yok
+              td= urun.tedarikci_firma
+              td
+                .d-flex
+                  a.btn.btn-sm(href=`/urun-guncelle/${urun.urun_id}`) Güncelle
+                  form(action=`/urun-sil/${urun.urun_id}`, method="POST", style="display: inline;")
+                    button.btn.btn-danger.btn-sm(type="submit") Sil
+
+    // Footer
+    footer
+      p &copy; 2025 E-Ticaret. Tüm hakları saklıdır.

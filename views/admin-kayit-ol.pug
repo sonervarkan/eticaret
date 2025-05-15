@@ -1,0 +1,78 @@
+// admin-kayıt-ol.pug
+doctype html
+html(lang="tr")
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Kayıt Ol
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+
+            margin-bottom: 10px;
+        }
+       
+        .register-container {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .register-container input, .register-container select {
+            margin: 10px 0;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        .login-link {
+            margin-top: 20px;
+        }
+
+        .login-link p{
+            color: black;
+        }
+body
+    .navbar     
+        ul 
+            li 
+                img(src="/img2/logo.jpg" height="50px" width="50px")
+            li 
+                a(href="/") Ana Sayfa   
+    .register-container
+        h2 Kayıt Ol
+        if error
+            p(style="color: red;") #{error}
+        .form-container
+            form(action="/admin-kayit-ol", method="POST")
+                .form-group
+                    input(type="text", name="personel_adi", placeholder="Personel Adı", required)
+                .form-group
+                    input(type="password", name="personel_sifre", placeholder="Personel Şifresi", required)
+                .form-group
+                    select(name="rolId", required)
+                        option(value="") Rol Seçiniz
+                        option(value="1") Yönetici
+                        option(value="2") Çalışan
+                
+                button.btn(type="submit") Kayıt Ol
+        .login-link
+            p Kayıtlı mısınız? 
+            a.btn(href="/admin-login") Giriş Yap

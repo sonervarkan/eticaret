@@ -1,0 +1,139 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Ürün Güncelle - E-Ticaret
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      .alert {
+        background-color: #28a745;
+        color: white;
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .alert button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #222;
+      }
+      form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 16px;
+      }
+      .form-control:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+      }
+      .row {
+        display: flex;
+        gap: 20px;
+      }
+      .col-md-3 {
+        flex: 1;
+      }
+
+  body
+    // Navbar
+    .navbar
+      ul
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px")
+        li
+          a(href="/admin-home-page") Admin Home Page
+
+    // Success Message
+    .container-fluid
+      if success
+        .alert
+          | Ürün başarıyla güncellendi!
+          button(type="button") X
+
+      // Ürün Güncelleme Formu
+      h2 Ürün Güncelle
+      form(action=`/urun-guncelle/${urun.urun_id}`, method="POST")
+        .row
+          .col-md-3
+            .form-group
+              label(for="marka") Marka
+              select.form-control(name="marka", id="marka", required)
+                option(value="") Marka Seçiniz
+                each marka in markalar
+                  option(value=marka.marka_id, selected=(marka.marka_id == seciliMarka))= marka.marka_adi
+          .col-md-3
+            .form-group
+              label(for="model") Model
+              select.form-control(name="model", id="model", required)
+                option(value="") Model Seçiniz
+                each model in modeller
+                  option(value=model.model_id, selected=(model.model_id == seciliModel))= model.model_adi
+          .col-md-3
+            .form-group
+              label(for="kategori") Kategori
+              select.form-control(name="kategori", id="kategori", required)
+                option(value="") Kategori Seçiniz
+                each kategori in kategoriler
+                  option(value=kategori.kategori_id, selected=(kategori.kategori_id == seciliKategori))= kategori.kategori_adi
+
+
+          .col-md-3
+            .form-group
+              label(for="tedarikci_firma") Tedarikçi Firma
+              select.form-control(name="tedarikci_firma", id="tedarikci_firma", required)
+                option(value="") Tedarikçi Seçiniz
+                each tedarikci in tedarikciler
+                  option(value=tedarikci.tedarikci_id, selected=(tedarikci.tedarikci_id == seciliTedarikci))= tedarikci.tedarikci_firma
+
+        .form-group
+          label(for="urun_aciklama") Ürün Açıklaması
+          textarea.form-control(id="urun_aciklama", name="urun_aciklama", rows="3")= urun.urun_aciklama
+
+        .form-group
+          label(for="urun_fiyati") Ürün Fiyatı
+          input.form-control(type="number", id="urun_fiyati", name="urun_fiyati", value=urun.urun_fiyati, step="0.01", required)
+
+        .form-group
+          label(for="urun_resim_url") Ürün Resim URL
+          input.form-control(type="text", id="urun_resim_url", name="urun_resim_url", value=urun.urun_resim_url, required)
+
+        .form-group
+          label(for="indirimli_fiyat") İndirimli Fiyat
+          input.form-control(type="number", id="indirimli_fiyat", name="indirimli_fiyat", value=urun.indirimli_fiyat, step="0.01")
+
+        .form-group
+          label(for="stok_miktari") Stok Miktarı
+          input.form-control(type="number", id="stok_miktari", name="stok_miktari", value=stokMiktari, required)
+
+        button.btn(type="submit") Güncelle
+
+    // Footer
+    footer
+      p &copy; 2025 E-Ticaret. Tüm hakları saklıdır.

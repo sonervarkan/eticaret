@@ -1,0 +1,77 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Müşteri Güncelle
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      
+      .form-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input[type="text"],
+      input[type="email"],
+      input[type="tel"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+      
+    
+
+  body
+    // Navbar (Menü Çubuğu)// Navbar
+    .navbar
+        ul
+            li 
+                img(src="/img2/logo.jpg" height="50px" width="50px")
+            li
+                a(href="#") Admin Paneli
+            li 
+                a(href="/admin-home-page") Admin Home Page
+            li
+                a(href="/musteri-listele") Müşteri Listesi
+            li
+                a(href="/") Ana Sayfa
+
+    h1 Müşteri Bilgilerini Güncelle
+    .form-container
+      form(action="/musteri-guncelle" method="POST")
+        input(type="hidden" name="musteri_id" value=musteri.musteri_id)
+        
+        .form-group
+          label(for="musteri_adi") Müşteri Adı
+          input(type="text" id="musteri_adi" name="musteri_adi" value=musteri.musteri_adi required)
+        
+        .form-group
+          label(for="musteri_soyadi") Müşteri Soyadı
+          input(type="text" id="musteri_soyadi" name="musteri_soyadi" value=musteri.musteri_soyadi required)
+        
+        .form-group
+          label(for="musteri_email") E-posta
+          input(type="email" id="musteri_email" name="musteri_email" value=musteri.musteri_email required)
+        
+        .form-group
+          label(for="musteri_tel") Telefon
+          input(type="tel" id="musteri_tel" name="musteri_tel" value=musteri.musteri_tel required)
+        
+        .form-group
+          label(for="musteri_adres") Adres
+          textarea(id="musteri_adres" name="musteri_adres" rows="4")= musteri.musteri_adres
+        
+        button.btn(type="submit") Güncelle

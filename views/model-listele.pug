@@ -1,0 +1,52 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+        link(rel="stylesheet", href="/css/main.css")
+        style.
+           table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+            }
+            table th, table td {
+                padding: 12px;
+                border: 1px solid #ddd;
+                text-align: left;
+            
+            }
+            table th {
+                background-color: #333;
+                color: white;
+            }
+            
+    body 
+        // Navbar (Menü Çubuğu)
+        .navbar
+            ul
+                li 
+                    img(src="/img2/logo.jpg" height="50px" width="50px")
+                li
+                    a(href="#") E-Ticaret
+                li
+                    a(href="/") Ana Sayfa
+                li 
+                    a(href="/admin-home-page") Admin Home Page
+        .container-fluid
+            table
+                thead 
+                    tr 
+                        th Model Id 
+                        th Model Adı
+                        th İşlemler
+                tbody 
+                    each model in modeller 
+                        tr 
+                            td=model.model_id 
+                            td=model.model_adi
+                            td 
+                                span(style="display:flex; margin-top:10px;gap:10px;")
+                                    a.btn.btn-primary(href=`/model-guncelle/${model.model_id}`) Güncelle 
+                                    a.btn.btn-danger(href=`/model-sil/${model.model_id}`) Sil  

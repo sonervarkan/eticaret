@@ -1,0 +1,49 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title Document
+        link(rel="stylesheet", href="/css/main.css")
+        style.
+            .form-container {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            }
+            form {
+                background-color: #fff;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .form-group {
+                margin-bottom: 20px;
+            }
+            .form-group label {
+
+                margin-bottom: 10px;
+            }
+            
+    body 
+        // Navbar (Menü Çubuğu)// Navbar
+        .navbar
+            ul
+                li 
+                    img(src="/img2/logo.jpg" height="50px" width="50px")
+                li
+                    p Admin Paneli
+                li 
+                    a(href="/admin-home-page") Admin Home Page
+                li
+                    a(href="/model-listele") Model Listesi
+                li
+                    a(href="/") Ana Sayfa
+        .containe-fluid
+            .form-container
+                form(action="/model-ekle", method="POST")
+                    form-group
+                        label(for="model_adi") Model Adı
+                        input(type="text", name="model_adi")
+                    button(type=submit) Ekle

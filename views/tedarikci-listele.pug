@@ -1,0 +1,75 @@
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Tedarikçi Listesi
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+     
+      h2 {
+        text-align: center;
+        margin: 30px 0 20px;
+        color: #222;
+      }
+      
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table th, table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+       
+      }
+      table th {
+        background-color: #333;
+        color: white;
+      }
+      
+      form {
+        display: inline;
+      }
+
+  body
+    // Navbar
+    .navbar
+        ul 
+            li 
+              img(src="/img2/logo.jpg" height="50px" width="50px")
+            li 
+                a(href="#") Admin Paneli
+            li 
+                a(href="/admin-home-page") Admin Home Page
+            li 
+                a(href="/tedarikci-ekle") Tedarikçi Ekle
+            li 
+                a(href="/") Ana Sayfa
+
+    // İçerik
+    .container-fluid
+      h2 Tedarikçi Listesi
+      table
+        thead
+          tr
+            th Tedarikçi ID
+            th Tedarikçi Adı
+            th Tedarikçi Soyadı
+            th Tedarikçi Firma
+            th Tedarikçi Tel
+            th Tedarikçi Email
+            th İşlemler
+        tbody
+          each tedarikci in tedarikciler
+            tr
+              td= tedarikci.tedarikci_id
+              td= tedarikci.tedarikci_adi
+              td= tedarikci.tedarikci_soyadi
+              td= tedarikci.tedarikci_firma
+              td= tedarikci.tedarikci_tel
+              td= tedarikci.tedarikci_email
+              td
+                span(style="display:flex; margin-top:10px;gap:10px;")
+                  a.btn.btn-primary(href=`/tedarikci-guncelle/${tedarikci.tedarikci_id}`) Güncelle
+                  a.btn.btn-danger(href=`/tedarikci-sil/${tedarikci.tedarikci_id}`) Sil

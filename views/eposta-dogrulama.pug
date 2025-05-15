@@ -1,0 +1,120 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title E-posta Doğrulama
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      
+
+      .navbar {
+        background-color: #1d2e69;
+        padding: 15px;
+      }
+
+      
+      .box {
+        max-width: 500px;
+        margin: 50px auto;
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      }
+
+      h2 {
+        text-align: center;
+        color: #1d2e69;
+        margin-bottom: 20px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+      }
+
+      .btn {
+        width: 100%;
+        background-color: #1d2e69;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #14204a;
+      }
+
+      .alert {
+        background-color: #f8d7da;
+        color: #842029;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        border: 1px solid #f5c2c7;
+      }
+
+      .kod-gelmedi {
+        margin-top: 15px;
+        font-size: 14px;
+        text-align: center;
+      }
+
+      .kod-gelmedi a {
+        color: #1d2e69;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .box p{
+        color:#333;
+      }
+
+  body
+    .navbar
+      ul
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px") 
+        li 
+          p E-Ticaret
+        li 
+          a(href="/") Ana Sayfa
+    .box
+      h2 E-posta Doğrulama
+      if hata
+        .alert #{hata}
+      p #{musteri_email} adresine gönderilen doğrulama kodunu giriniz.
+      form(action="/eposta-dogrulama", method="POST")
+        input(type="hidden", name="musteri_email", value=musteri_email)
+        .form-group
+          label(for="dogrulama_kodu") Doğrulama Kodu:
+          input.form-control(
+            type="text",
+            name="dogrulama_kodu",
+            id="dogrulama_kodu",
+            required,
+            maxlength="6",
+            pattern="[0-9]{6}",
+            title="6 haneli doğrulama kodunu giriniz"
+          )
+        button.btn(type="submit") Doğrula
+        .kod-gelmedi
+          p Kod gelmedi mi? 
+            a(href="#", onclick="alert('Kodunuz e-postanıza gönderilmiştir. Spam klasörünü kontrol edin.')") Yardım

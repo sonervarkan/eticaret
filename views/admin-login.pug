@@ -1,0 +1,62 @@
+// admin-login.pug
+doctype html
+html(lang="tr")
+head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Admin Giriş
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+
+            margin-bottom: 10px;
+        }
+    
+        .login-container {
+            text-align: center;
+            padding: 50px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .login-container input {
+            margin: 10px 0;
+            padding: 10px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+body 
+    .navbar 
+        ul
+            li 
+                img(src="/img2/logo.jpg" height="50px" width="50px") 
+            li 
+                a(href="/") Ana Sayfa 
+    .login-container
+        h2 Admin Giriş
+        .form-container
+            form(action="/admin-login", method="POST")
+                .form-group
+                    input(type="text", name="personel_adi", placeholder="Personel Adı", required)
+                .form-group
+                    input(type="password", name="personel_sifre", placeholder="Personel Şifresi", required)
+                
+                button.btn(type="submit") Giriş Yap
+

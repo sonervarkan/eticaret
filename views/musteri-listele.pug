@@ -1,0 +1,62 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Müşteri Listele
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table th, table td {
+        padding: 12px;
+        border: 1px solid #ddd;
+        text-align: left;
+       
+      }
+      table th {
+        background-color: #333;
+        color: white;
+      }
+      
+  body
+    // Navbar (Menü Çubuğu)
+    .navbar
+      ul
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px")
+        li
+          a(href="#") E-Ticaret
+        li
+          a(href="/") Ana Sayfa
+        li
+          a(href="/admin-home-page") Admin Home Page
+    .container-fluid
+      table
+        thead
+          tr
+            th Müşteri Id
+            th Müşteri Adı
+            th Müşteri Soyadı
+            th Müşteri E-posta
+            th Müşteri Tel
+            th Müşteri Adres
+            th Kayıt Zamanı
+            th İşlemler
+        tbody
+          each musteri in musteriler
+            tr
+              td= musteri.musteri_id
+              td= musteri.musteri_adi
+              td= musteri.musteri_soyadi
+              td= musteri.musteri_email
+              td= musteri.musteri_tel
+              td= musteri.musteri_adres
+              td= new Date(musteri.kayit_tarihi).toLocaleDateString('tr-TR') + " - " + new Date(musteri.kayit_tarihi).toLocaleTimeString('tr-TR')
+              td
+                a.btn.btn-primary(href=`musteri-guncelle/${musteri.musteri_id}`) Güncelle
+              td
+                a.btn.btn-danger(href=`musteri-sil/${musteri.musteri_id}`) Sil

@@ -1,0 +1,57 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Ödeme Tamamlandı
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css", rel="stylesheet")
+  body
+    .container.mt-5
+      .card.text-center
+        .card-header.bg-success.text-white
+          h2 Ödeme Başarılı!
+        .card-body
+          h4.card-title Siparişiniz alındı
+          p.card-text Teşekkür ederiz, ödemeniz başarıyla tamamlandı.
+          
+          if detaylar && detaylar.length > 0
+            - let toplamFiyat = 0
+            .mt-4
+              h5 Sipariş Detayları
+              table.table.table-striped
+                thead
+                  tr
+                    th Ürün Açıklama
+                    th Birim Fiyat
+                    th Adet
+                    th Toplam
+                tbody
+                  each item in detaylar
+                    - const birimFiyat = parseFloat(item.gercek_fiyat || item.indirimli_fiyat || item.urun_fiyati)
+                    - const urunToplam = birimFiyat * item.adet
+                    - toplamFiyat += urunToplam
+                    tr
+                      td= item.urun_aciklama
+                      td= birimFiyat.toFixed(2) + ' ₺'
+                      td= item.adet
+                      td= urunToplam.toFixed(2) + ' ₺'
+                tfoot
+                  tr
+                    th(colspan="3") Genel Toplam
+                    th= toplamFiyat.toFixed(2) + ' ₺'
+          
+          .mt-4
+            h5 Sipariş Bilgileri
+            p Sipariş Numarası: #{siparisId}
+            p Ödeme Durumu: Ödendi
+            
+            // Sadece kayıtlı müşteriler için ek bilgiler
+            if musteri && (musteri.adi || musteri.email)
+              if musteri.adi
+                p Müşteri: #{musteri.adi} #{musteri.soyadi || ''}
+              if musteri.email
+                p E-posta: #{musteri.email}
+            
+          a.btn.btn-primary.mt-3(href="/") Ana Sayfaya Dön
+
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js")

@@ -1,0 +1,93 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Üye Ol
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      .box {
+          max-width: 500px;
+          margin: 50px auto;
+          background-color: #fff;
+          padding: 30px;
+          border-radius: 10px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+      
+      h2 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+        margin-bottom: 5px;
+        display: block;
+      }
+      input.form-control, textarea.form-control {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+      }
+      textarea.form-control {
+        resize: vertical;
+      }
+     
+      p.mt-3 {
+        text-align: center;
+        color:black;
+      }
+      p.mt-3 a {
+        color: #007bff;
+        text-decoration: none;
+      }
+      p.mt-3 a:hover {
+        text-decoration: underline;
+      }
+     
+  body
+    // Navbar (Menü Çubuğu)
+    .navbar
+      ul 
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px")
+        li 
+          a.navbar-brand(href="#") E-Ticaret
+            li
+              a(href="/") Ana Sayfa
+            li
+              a(href="/sepet") Sepetim
+    
+    .box
+      h2 Üye Ol
+      form(action="/musteri-uye-ol", method="POST")
+        .form-group
+          label(for="musteri_adi") Adınız:
+          input.form-control(type="text", name="musteri_adi", id="musteri_adi", required)
+        .form-group
+          label(for="musteri_soyadi") Soyadınız:
+          input.form-control(type="text", name="musteri_soyadi", id="musteri_soyadi", required)
+        .form-group
+          label(for="sifre") Şifre:
+          input.form-control(type="text", name="sifre", id="sifre", required)
+        .form-group
+          label(for="musteri_email") E-posta:
+          input.form-control(type="email", name="musteri_email", id="musteri_email", required)
+        .form-group
+          label(for="musteri_tel") Telefon:
+          input.form-control(type="tel", name="musteri_tel", id="musteri_tel", required)
+        .form-group
+          label(for="musteri_adres") Adres:
+          textarea.form-control(name="musteri_adres", id="musteri_adres", rows="3", required)
+        button.btn.btn-primary(type="submit") Üye Ol
+
+      p.mt-3
+        | Hesabınız var mı? 
+        a(href="/musteri-login") Giriş Yap

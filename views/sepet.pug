@@ -1,0 +1,99 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Sepetim
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css", rel="stylesheet")
+    link(href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css", rel="stylesheet")
+    // Özel CSS
+    style.
+      .product-card {
+        transition: transform 0.3s;
+        position: relative;
+      }
+      .product-card:hover {
+        transform: scale(1.05);
+      }
+      .cursor-pointer {
+        cursor: pointer;
+      }
+      .trash-icon {
+        color: red;
+        font-size: 1.2rem;
+      }
+  body
+    // Navbar (Menü Çubuğu)
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      .container
+        a.navbar-brand(href="#") E-Ticaret
+        button.navbar-toggler(type="button", data-bs-toggle="collapse", data-bs-target="#navbarNav")
+          span.navbar-toggler-icon
+        .collapse.navbar-collapse#navbarNav
+          ul.navbar-nav.me-auto
+            li.nav-item
+              a.nav-link(href="/") Ana Sayfa
+            li.nav-item
+              a.nav-link(href="/urunler") Ürünler
+            li.nav-item
+              a.nav-link(href="/kayitli-siparis-ver") Siparişler
+          ul.navbar-nav.ms-auto
+            if musteri
+              li.nav-item
+                span.nav-link Hoşgeldiniz, #{musteri.musteri_adi}
+              li.nav-item
+                a.nav-link(href="/musteri-logout") Çıkış
+            else
+              li.nav-item
+                a.nav-link(href="/musteri-login") Giriş
+              li.nav-item
+                a.nav-link(href="/musteri-uye-ol") Üye Ol
+
+    // Sepet Bölümü
+    .container.my-5
+      h2 Sepetim
+      if sepet && sepet.length > 0
+        .row
+          each item in sepet
+            .col-md-4.mb-3
+              .card.product-card(style="width: 200px; height: auto;")
+                img.card-img-top(src=item.urun_resim_url, height="150", width="100%")
+                .card-body
+                  h6.card-title #{item.marka_adi} #{item.model_adi}
+                  p.card-text= `₺${item.urun_fiyati}`
+                  p.card-text Adet: #{item.adet}
+                  p.card-text Toplam: ₺#{item.urun_fiyati * item.adet}
+                
+                // Çöp kutusu ikonu ile form
+                form(action="/sepetten-cikar", method="POST", style="display: inline;")
+                  input(type="hidden", name="urunId", value=item.urun_id) 
+                  button.btn.btn-link.p-0(type="submit", style="border: none; background: none;")
+                    i.fas.fa-trash-alt.trash-icon.cursor-pointer
+
+        // Sipariş Ver Butonu ve Modal
+        button.btn.btn-primary(type="button", data-bs-toggle="modal", data-bs-target="#siparisSecimModal") Sipariş Ver
+
+        // Modal
+        .modal.fade#siparisSecimModal(tabindex="-1", aria-labelledby="siparisSecimModalLabel", aria-hidden="true")
+          .modal-dialog
+            .modal-content
+              .modal-header
+                h5.modal-title#siparisSecimModalLabel Siparişe Devam Et
+                button.btn-close(type="button", data-bs-dismiss="modal", aria-label="Close")
+
+              .modal-footer
+                if !musteri
+                  a.btn.btn-success(href="/kayitli-siparis-ver") Giriş Yaparak Devam Et
+                  a.btn.btn-warning(href="/kayitsiz-siparis-ver") Giriş Yapmadan Devam Et
+                else
+                  a.btn.btn-success(href="kayitli-siparis-ver") Siparişe Devam Et
+      else
+        p Sepetiniz boş.
+
+    // Footer
+    footer.bg-dark.text-white.text-center.py-4
+      p.mb-0 &copy; 2023 E-Ticaret. Tüm hakları saklıdır.
+
+    // Bootstrap JS ve Popper.js CDN
+    script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js")

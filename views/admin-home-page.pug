@@ -1,0 +1,105 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Admin Ana Sayfa
+    // Bootstrap CSS CDN
+    link(href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css", rel="stylesheet")
+    style.
+      .me-auto{
+        display:flex;
+      }
+      .welcome-message {
+        text-align: center;
+        margin-top: 50px;
+        font-size: 24px;
+        color: #333;
+      }
+      .content {
+        padding: 20px;
+      }
+      footer {
+        position: absolute;
+        top: 600px;
+        width: 100%;
+      }
+      /* Toast mesaj stil */
+      .toast-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1100;
+      }
+  body
+    // Toast mesaj container
+    .toast-container#toastContainer
+
+    // Navbar (Menü Çubuğu)
+    nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
+      .container
+        ul.navbar-nav.me-auto
+          li 
+            img(src="/img2/logo.jpg" height="50px" width="50px")
+          li 
+            a.navbar-brand(href="#") Admin Paneli
+          li.nav-item
+            a.nav-link(href="/tum-ekleler") Ekle
+          li.nav-item
+            a.nav-link(href="/tum-listeler") Listele
+          li.nav-item
+            a.nav-link(href="/tum-sorgular") Sorgula
+        ul.navbar-nav.ms-auto
+          li.nav-item
+            a.nav-link(href="/") Ana Sayfa
+          li.nav-item
+            form(action="/cikis", method="POST")
+              button.btn.btn-link.nav-link(type="submit") Çıkış Yap
+          li.nav-item
+            button.btn.btn-link.nav-link(type="button", id="personelKayitBtn") Personel Kayıt
+
+    // Hoş Geldiniz Mesajı
+    .welcome-message
+      p Hoş Geldiniz, #{personel_adi}!
+
+    // İçerik Alanı
+    .container.my-5
+      .content
+        p Bu sayfadan ürün ekleyebilir, tüm listeyi görüntüleyebilir veya filtre sorguları yapabilirsiniz.
+
+    // Footer
+    footer.bg-dark.text-white.text-center.py-4
+      p.mb-0 &copy; 2025 E-Ticaret. Tüm hakları saklıdır.
+
+    // Bootstrap JS ve Popper.js CDN
+    script(src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js")
+    
+    // Frontend JavaScript
+    script.
+      document.getElementById('personelKayitBtn').addEventListener('click', async () => {
+        try {
+          const response = await fetch('/check-admin-auth');
+          const data = await response.json();
+          
+          if (data.isAuthorized) {
+            window.location.href = '/admin-kayit-ol';
+          } else {
+            // Bootstrap Toast mesajı oluştur
+            const toastContainer = document.getElementById('toastContainer');
+            toastContainer.innerHTML = `
+              <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+                <div class="toast-header bg-danger text-white">
+                  <strong class="me-auto">Hata</strong>
+                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                </div>
+                <div class="toast-body">
+                  Personel kaydetmeye yetkiniz bulunmuyor!
+                </div>
+              </div>
+            `;
+          }
+        } catch (err) {
+          console.error('Hata:', err);
+        }
+      });

@@ -1,0 +1,94 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Kayıtlı Ödeme
+    link(rel="stylesheet", href="/css/main.css") 
+    style.
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Formun genişliği */
+            margin: 0 auto;  /* Ortalamak için */
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            margin-bottom: 10px;
+        }
+        .form-control {
+            width: 100%;  /* Form elemanlarının genişliği */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background-color: #333;
+            color: white;
+        }
+        h1, p {
+            color: black;
+        }
+        .btn {
+            padding: 10px 20px;
+            border-radius: 4px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background-color: #3498db;
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+        p{
+            color:white;
+        }
+  body
+    // Navbar (Menü Çubuğu)
+    .navbar
+        ul
+            li 
+                img(src="/img2/logo.jpg" height="50px" width="50px")
+            li
+                p Kayıtlı Ödeme
+            li
+                a(href="/") Ana Sayfa
+    .container-fluid
+      h1.text-center.mb-4 Kayıtlı Ödeme
+      .form-container
+        form(action="/kayitli-odeme-yap", method="POST")
+          input(type="hidden", name="siparisId", value=siparisId)
+          .form-group
+            label.form-label(for="kartNumarasi") Kart Numarası
+            input.form-control(type="text", id="kartNumarasi", name="kartNumarasi", placeholder="1234 5678 9012 3456", required)
+          .form-group
+            label.form-label(for="sonKullanma") Son Kullanma Tarihi
+            input.form-control(type="text", id="sonKullanma", name="sonKullanma", placeholder="MM/YY", required)
+          .form-group
+            label.form-label(for="cvv") CVV
+            input.form-control(type="text", id="cvv", name="cvv", placeholder="123", required)
+          .d-grid
+            button.btn.btn-primary(type="submit") Ödeme Yap

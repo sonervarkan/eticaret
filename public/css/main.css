@@ -1,0 +1,106 @@
+/* GENEL SAYFA DÜZENLERİ*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  width: 100%;
+  overflow-x: hidden; /* Yatay taşmayı engeller */
+}
+.container-fluid {
+  width: 100%;
+  padding: 0 15px;
+  margin:10px;
+
+}
+
+.navbar{
+  display: flex;
+  align-items: center;
+  background-color: #343a40;
+  padding: 10px 0px 0px 10px;
+  width:100vw;
+  font-size: 16px;
+}
+
+.navbar ul{
+  display:flex;
+  margin: 0px;
+  padding: 0px;
+  align-items: center;
+  list-style: none;
+  gap:20px;
+ 
+  
+}
+
+.navbar li,p,a, span{
+  color: #ddd;
+  text-decoration: none;
+  list-style: none;
+}
+
+.navbar ul li a:hover{
+color: #6b6868;
+
+}
+
+.btn{
+background-color: #1d2e69;
+color: white;
+border: none;
+padding: 8px;
+border-radius: 4px;
+cursor: pointer;
+}
+
+.btn:hover {
+background-color: #0056b3;
+}
+.btn-danger {
+background-color:rgb(100, 36, 42);
+}
+.btn-danger:hover {
+background-color: #c82333;
+}
+button.btn.btn-primary {
+width: 100%;  /* Butonun genişliğini form elemanlarıyla eşitle */
+padding: 10px;
+}
+/* Footer */
+footer {
+background-color: #343a40;
+color: white;
+padding: 15px 0;
+font-size: 0.8rem;
+margin-top: 30px;
+}
+.footer-content {
+display: flex;
+justify-content: space-between;
+align-items: center;
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 15px;
+}
+.footer-links {
+display: flex;
+gap: 15px;
+}
+.footer-links a {
+color: white;
+text-decoration: none;
+}
+
+/* Responsive Tasarım */
+@media (max-width: 992px) {
+.main-content {
+    flex-direction: column;
+}
+
+}

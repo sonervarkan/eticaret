@@ -1,0 +1,86 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Siparişlerim
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #222;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      table, th, td {
+        border: 1px solid #ddd;
+      }
+      th, td {
+        padding: 12px;
+        text-align: center;
+      }
+      th {
+        background-color: #f0f0f0;
+        font-weight: bold;
+      }
+      img {
+        border-radius: 6px;
+      }
+      .alert {
+        text-align: center;
+        padding: 20px;
+        background-color: #e0f3ff;
+        border: 1px solid #b5dfff;
+        color: #055160;
+        border-radius: 6px;
+      }
+
+  body
+    // Navbar
+    .navbar
+      ul
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px")
+        li 
+          a(href="#") Siparişlerim
+        li
+          a(href="/") Ana Sayfa
+        li
+          a(href="/urunler") Ürünler
+        li
+          if musteri
+            span(style="margin-left: auto; color: white; font-weight: bold") Hoşgeldiniz, #{musteri.musteri_adi}
+          li
+            a(href="/musteri-logout", style="margin-left: 15px; color: white;") Çıkış
+
+    // Siparişlerim
+    .container-fluid
+      h1 Siparişlerim
+      if siparisler && siparisler.length > 0
+        table
+          thead
+            tr
+              th Marka Adı
+              th Model Adı
+              th Ürün Fotoğrafı
+              th Adet
+              th Birim Fiyat
+              th Toplam Tutar
+              th Sipariş Tarihi
+          tbody
+            each siparis in siparisler
+              tr
+                td= siparis.marka_adi 
+                td= siparis.model_adi
+                td
+                  img(src=siparis.urun_resim_url, alt=siparis.urun_adi, width="100")
+                td= siparis.adet
+                td= siparis.birim_fiyat
+                td= siparis.toplam_tutar
+                td= new Date(siparis.siparis_tarihi).toLocaleDateString("tr-TR")
+      else
+        .alert Henüz siparişiniz bulunmamaktadır.

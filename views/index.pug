@@ -1,0 +1,368 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title E-Ticaret Ana Sayfa
+    link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css")
+    link(rel="stylesheet", href="/css/main.css")
+    link(rel="stylesheet", href="/css/style.css")
+    style.
+      
+      .api {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100vw;
+        padding: 0px 40px;
+        background-color:rgb(29, 46, 105);
+        margin: 0px 0px;
+      }
+
+    
+      
+      .exchange {
+        transform: scale(1);
+        transform-origin: left;
+        height:12vh;
+        font-size:15px;
+      }
+
+      .weather {
+        transform: scale(0.7);
+        transform-origin: right;
+        margin-top: 0px; /* Weather API'si için özel konumlandırma */
+        height:12vh;
+        color:white;
+      }
+
+      /* Main Content */
+      .main-content {
+        display: flex;
+        gap: 15px;
+        padding: 20px 15px;
+        width: 100vw;
+        margin: 0 auto;
+      
+      }
+
+     .img-container img{
+        width:33vw;
+        height:300px;
+      }
+    
+
+      .reklam {
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        width:33vw;
+      }
+
+    
+
+      /* Avantajlı Alanı*/
+      .avantajli{
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        background-color: #B0C4DE;
+        width:100vw;
+      }
+      .avantaj-img{
+        display: flex;
+        justify-content: space-between;
+        gap:70px;
+
+      }
+      .avantaj-img img{
+        height:100px;
+        width:100px;
+        border-radius: 100%;
+      }
+     
+  body         
+    .container-fluid
+      .navbar
+        ul
+          li 
+            img(src="/img2/logo.jpg" height="50px" width="50px")
+          li
+            a(href="/") Ana Sayfa
+          li
+            a(href="/urunler") Ürünler
+          li
+            a(href="/sepet") Sepetim
+          li
+            a(href="/hakkimizda") Hakkımızda
+          li
+            a(href="/iletisim") İletişim
+          li
+            a(href="/siparis-arsiv") Siparişlerim
+          if musteri
+            li
+              span Hoşgeldiniz, #{musteri.musteri_adi}
+            li
+              a(href="/musteri-logout") Çıkış
+          else
+            li
+              a(href="/musteri-login") Giriş
+            li
+              a(href="/musteri-uye-ol") Üye Ol
+            li
+              a(href="/admin-login") Admin
+
+      .api
+        .exchange
+        .search-container
+          form(action="/kategoriler", method="POST")
+            .input-group
+              input.form-control(type="text", name="search", placeholder="Kategori, marka, model ara...", aria-label="Search")
+              button.btn.btn-primary(type="submit")
+                i.fas.fa-search
+        .weather
+    
+      // Yeni kategori menüsü alanı
+      .category-navbar
+        .category-box
+          button.category-toggle(type="button", onclick="toggleCategoryMenu()")
+            i.fas.fa-bars
+            span KATEGORİLER
+          .category-dropdown
+            .category-section.category-list
+              h4 Kategoriler
+              ul
+                if kategoriler && kategoriler.length > 0
+                  each kategori in kategoriler
+                    li(
+                      onclick=`showMarkalar(${kategori.kategori_id}, '${kategori.kategori_adi.replace(/'/g, "\\'")}')`
+                    )= kategori.kategori_adi
+                else
+                  li Kategori bulunamadı
+
+            .category-section.brand-list(style="display:none")
+              h4 Markalar 
+              button.back-btn(onclick="hideMarkalar()") ← Geri
+              ul
+
+            .category-section.model-list(style="display:none")
+              h4 Modeller
+              button.back-btn(onclick="hideModeller()") ← Geri
+              ul.model-list
+
+      .main-content
+        .slider-container
+          h4 Öne Çıkan Ürünler
+          .slider-wrapper
+            .slider-track
+              each urun in urunler
+                .slider-slide
+                  .product-card
+                    img(src=urun.urun_resim_url height="150px", width="150px")
+                    p= urun.marka_adi 
+                    p= urun.model_adi
+                    p= `₺${urun.urun_fiyati}`
+                    if urun.indirimli_fiyat && urun.indirimli_fiyat > 0
+                      span.indirim-bilgisi (İndirimli!)
+                    p= urun.urun_aciklama
+                    form(action="/sepet", method="POST")
+                      input(type="hidden", name="urunId", value=urun.urun_id)
+                      input(type="hidden", name="fiyat", value=urun.urun_fiyati) 
+                      .form-group
+                        label(for=`adet-${urun.urun_id}`) Adet:
+                        input(type="number", name="adet", id=`adet-${urun.urun_id}`, value="1", min="1", required)
+                      button.btn.btn-primary(type="submit") SEPETE EKLE
+            button.slider-button.prev ‹
+            button.slider-button.next ›
+        
+        .img-container
+          img(src="/img2/sakinfirsatikacirmayin.jpg", alt="Kampanya")
+
+        .reklam
+          if indirimliUrunler && indirimliUrunler.length > 0
+            .indirim-slider-container
+              h5 BAYRAM İNDİRİMİNİ KAÇIRMAYIN!
+              .slider-wrapper
+                .indirim-slider-track
+                  each urun in indirimliUrunler
+                    .indirim-slider-slide
+                      img(src=urun.urun_resim_url height="150px", width="150px")
+                      p= urun.marka_adi 
+                      p= urun.model_adi
+                      h5= `₺${urun.indirimli_fiyat}`
+                      form(action="/sepet", method="POST")
+                        input(type="hidden", name="urunId", value=urun.urun_id)
+                        input(type="hidden", name="adet", value="1")
+                        input(type="hidden", name="indirimliFiyat", value=urun.indirimli_fiyat)
+                        button.btn.btn-warning(type="submit") HEMEN AL
+                button.indirim-slider-button.prev ‹
+                button.indirim-slider-button.next ›
+          else
+            p Şu anda indirimli ürün bulunmamaktadır.
+      
+      .avantajli
+        .avantaj-baslik 
+          h2 Çok satılan ürünler
+        .avantaj-img
+          each avantajliUrun in avantajliUrunler
+            a(href=`/sepet?urunId=${avantajliUrun.urun_id}`)
+              img(src=avantajliUrun.urun_resim_url)
+
+             
+    footer
+      .footer-content
+        p &copy; 2025 E-Ticaret. Tüm hakları saklıdır.
+        .footer-links
+          a(href="#") KVKK Uygulamaları
+          a(href="#") Çerez Yönetimi
+
+    script(src="/script/script.js")
+    script.
+      // INDIRIMLI SLIDERI
+      document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.indirim-slider-slide');
+        const prevBtn = document.querySelector('.indirim-slider-button.prev');
+        const nextBtn = document.querySelector('.indirim-slider-button.next');
+        
+        let currentIndex = 0;
+        let autoSlideInterval;
+
+        // Slaytları güncelle
+        function showSlide(index) {
+          // Tüm slaytları gizle
+          slides.forEach(slide => {
+            slide.style.display = 'none';
+          });
+          
+          // Geçerli slaytı göster
+          slides[index].style.display = 'block';
+        }
+
+        // Otomatik kaydırma
+        function startAutoSlide() {
+          autoSlideInterval = setInterval(() => {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+          }, 3000); // 3 saniyede bir
+        }
+
+        // Sonraki slayt
+        function nextSlide() {
+          currentIndex = (currentIndex + 1) % slides.length;
+          showSlide(currentIndex);
+          resetAutoSlide();
+        }
+
+        // Önceki slayt
+        function prevSlide() {
+          currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+          showSlide(currentIndex);
+          resetAutoSlide();
+        }
+
+        // Otomatik kaydırmayı sıfırla
+        function resetAutoSlide() {
+          clearInterval(autoSlideInterval);
+          startAutoSlide();
+        }
+
+        // Buton eventleri
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+
+        // Başlangıçta ilk slaytı göster ve otomatik kaydırmayı başlat
+        showSlide(currentIndex);
+        startAutoSlide();
+      });
+
+      // ********KATEGORİ MENUSU***********
+      function toggleCategoryMenu() {
+        const dropdown = document.querySelector('.category-dropdown');
+        dropdown.classList.toggle('active');
+        
+        // Eğer menü açıksa ve markalar/modeller gösteriliyorsa, sıfırla
+        if (dropdown.classList.contains('active')) {
+          hideMarkalar();
+        }
+      }
+
+      // Markaları göster
+     async function showMarkalar(kategoriId, kategoriAdi) {
+        const brandSection = document.querySelector('.brand-list');
+        const modelSection = document.querySelector('.model-list');
+        const brandList = brandSection.querySelector('ul');
+
+        modelSection.style.display = 'none';
+        brandSection.style.display = 'block';
+
+        try {
+          const response = await fetch(`/api/markalar?kategoriId=${kategoriId}`);
+          if (!response.ok) throw new Error('API error');
+
+          const markalar = await response.json();
+          brandList.innerHTML = markalar.length > 0
+            ? markalar.map(marka => `
+              <li onclick="showModeller(${marka.marka_id}, '${escapeHtml(marka.marka_adi)}')">
+                ${marka.marka_adi}
+              </li>
+            `).join('')
+            : '<li>Marka bulunamadı</li>';
+        } catch (error) {
+          console.error('Marka yüklenemedi:', error);
+          brandList.innerHTML = '<li>Hata oluştu</li>';
+        }
+      }
+
+      async function showModeller(markaId, markaAdi) {
+        const modelSection = document.querySelector('.model-list');
+        const modelList = modelSection.querySelector('ul');
+
+        modelSection.style.display = 'block';
+
+        try {
+          const response = await fetch(`/api/modeller?markaId=${markaId}`);
+          if (!response.ok) throw new Error('API error');
+
+          const modeller = await response.json();
+          modelList.innerHTML = modeller.length > 0
+            ? modeller.map(model => `
+              <li>
+                <a href="/kategoriler?modelId=${model.model_id}&markaId=${markaId}">
+                  ${escapeHtml(model.model_adi)}
+                </a>
+              </li>
+            `).join('')
+            : '<li>Model bulunamadı</li>';
+        } catch (error) {
+          console.error('Model yüklenemedi:', error);
+          modelList.innerHTML = '<li>Hata oluştu</li>';
+        }
+      }
+
+
+
+        // Model listesini gizle
+        function hideModeller() {
+          const modelList = document.querySelector('.model-list');
+          modelList.style.display = 'none';
+        }
+
+        // Marka listesini gizle
+        function hideMarkalar() {
+          const brandList = document.querySelector('.brand-list');
+          const categoryCol = document.querySelector('.category-column');
+          
+          hideModeller();
+          brandList.style.display = 'none';
+          categoryCol.style.width = '100%';
+        }
+
+        // XSS koruması için basit bir escape fonksiyonu
+        function escapeHtml(unsafe) {
+          return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+        }

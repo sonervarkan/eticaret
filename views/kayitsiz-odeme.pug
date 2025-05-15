@@ -1,0 +1,100 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Kayıtsız Ödeme
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background-color: #333;
+            color: white;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px; /* Formun genişliği */
+            margin: 0 auto;  /* Ortalamak için */
+        }
+        form {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            margin-bottom: 10px;
+        }
+        h1, p {
+            color: black;
+        }
+        .form-control {
+            width: 100%;  /* Form elemanlarının genişliği */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+  body
+    // Navbar (Menü Çubuğu)// Navbar
+    .navbar
+        ul
+            li 
+                img(src="/img2/logo.jpg" height="50px" width="50px")
+            li
+                p Kayıtsız Ödeme
+            li
+                a(href="/") Ana Sayfa
+    .container-fluid
+      h1.text-center.mb-4 Kayıtsız Ödeme
+          if siparisDetay && siparisDetay.length > 0
+                h5 Sipariş Özeti (Toplam #{siparisDetay.length} ürün)
+                table
+                  thead
+                    tr
+                      th Ürün Açıklama
+                      th Birim Fiyat
+                      th Adet
+                      th Toplam
+                  tbody
+                    each item in siparisDetay
+                      tr
+                        td= item.urun_aciklama
+                        td= parseFloat(item.gercek_fiyat).toFixed(2) + ' ₺'
+                        td= item.adet
+                        td= (parseFloat(item.gercek_fiyat) * item.adet).toFixed(2) + ' ₺'
+                  tfoot
+                    tr
+                      th(colspan="3") Genel Toplam
+                      th= toplamFiyat + ' ₺'
+          
+      h5 Ödeme Bilgileri
+        .form-container
+          form(action="/kayitsiz-odeme-yap", method="POST")
+            .form-group
+              input.form-control(type="hidden", name="siparisId", value=tumSiparisIdler)
+            .form-group
+              label.form-label(for="kartNumarasi") Kart Numarası
+              input.form-control(type="text", id="kartNumarasi", name="kartNumarasi", placeholder="1234 5678 9012 3456", required)
+            .form-group
+              label.form-label(for="sonKullanma") Son Kullanma Tarihi
+              input.form-control(type="text", id="sonKullanma", name="sonKullanma", placeholder="MM/YY", required)
+            .form-group
+              label.form-label(for="cvv") CVV
+              input.form-control(type="text", id="cvv", name="cvv", placeholder="123", required)
+                
+              button.btn.btn-primary(type="submit") Ödeme Yap

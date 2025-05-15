@@ -1,0 +1,70 @@
+doctype html
+html(lang="tr")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    title Tedarikçi Güncelle
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+      
+      h2 {
+        text-align: center;
+        margin: 30px 0 20px;
+        color: #222;
+      }
+      
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+        color: #333;
+      }
+      .form-control {
+        width: 100%;
+        padding: 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background-color: #f5f5f5;
+        font-size: 16px;
+      }
+      
+
+  body
+    // Navbar
+    .navbar
+        ul
+            li 
+                img(src="/img2/logo.jpg" height="50px" width="50px")
+            li
+                a(href="#") Admin Paneli
+            li 
+                a(href="/admin-home-page") Admin Home Page
+            li
+                a(href="/tedarikci-listele") Tedarikçi Listesi
+            li
+                a(href="/") Ana Sayfa
+
+
+    // Form
+    .container-fluid
+      h2 Tedarikçi Güncelle
+      form(action=`/tedarikci-guncelle/${tedarikci.tedarikci_id}`, method="POST")
+        .form-group
+          label.form-label(for="tedarikci_adi") Tedarikçi Adı
+          input.form-control(type="text", name="tedarikci_adi", value=tedarikci.tedarikci_adi, required)
+        .form-group
+          label.form-label(for="tedarikci_soyadi") Tedarikçi Soyadı
+          input.form-control(type="text", name="tedarikci_soyadi", value=tedarikci.tedarikci_soyadi, required)
+        .form-group
+          label.form-label(for="tedarikci_firma") Tedarikçi Firma
+          input.form-control(type="text", name="tedarikci_firma", value=tedarikci.tedarikci_firma, required)
+        .form-group
+          label.form-label(for="tedarikci_tel") Tedarikçi Tel
+          input.form-control(type="text", name="tedarikci_tel", value=tedarikci.tedarikci_tel, required)
+        .form-group
+          label.form-label(for="tedarikci_email") Tedarikçi Email
+          input.form-control(type="text", name="tedarikci_email", value=tedarikci.tedarikci_email, required)
+        button.btn(type="submit") Güncelle

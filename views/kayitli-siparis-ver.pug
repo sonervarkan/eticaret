@@ -1,0 +1,103 @@
+doctype html
+html(lang="tr")
+  head
+    title Kayıtlı Sipariş
+    meta(charset="UTF-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1.0")
+    link(rel="stylesheet", href="/css/main.css")
+    style.
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        table th {
+            background-color: #333;
+            color: white;
+        }
+       
+        p {
+            color: black;
+            margin-bottom: 20px;
+        }
+        ul {
+            padding-left: 20px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        
+        .alert-warning {
+            background-color: #f39c12;
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        .form-control {
+            width: 100%;  /* Form elemanlarının genişliği */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+  body
+    // Navbar
+    .navbar
+      ul
+        li 
+          img(src="/img2/logo.jpg" height="50px" width="50px")
+        li
+          p Kayıtlı Sipariş
+        li
+          a(href="/") Ana Sayfa
+        li
+          a(href="/siparis-arsiv") Siparişlerim
+        li
+          a(href="#") Çıkış Yap
+    .container-fluid
+      p Kayıtlı Sipariş Sayfası
+      p Hoşgeldiniz, #{musteri.musteri_adi}
+      
+      if sepet && sepet.length > 0
+        ul
+         if sepet && sepet.length > 0
+        table
+          thead
+            tr
+              th Ürün Adı
+              th Adet
+              th Birim Fiyat
+              th İndirimli Fiyat
+              th Toplam
+          tbody
+            each item in sepet
+              tr
+                td= item.urun_adi
+                td= item.adet
+                td= parseFloat(item.urun_fiyati).toFixed(2) + ' ₺'
+                td
+                  if item.indirimli_fiyat && item.indirimli_fiyat > 0
+                    span ₺#{(item.indirimli_fiyat).toFixed(2)}
+                  else
+                    | -
+                td
+                  if item.indirimli_fiyat && item.indirimli_fiyat > 0
+                    span ₺#{(item.indirimli_fiyat * item.adet).toFixed(2)}
+                  else
+                    span ₺#{(item.urun_fiyati * item.adet).toFixed(2)}
+          tfoot
+            tr
+              th(colspan="4") Genel Toplam
+              th= toplamFiyat + ' ₺'
+        
+          strong Toplam Sipariş Tutarı: ₺#{toplamFiyat}
+        .form-control
+          form(action="/kayitli-siparis-tamamla", method="POST")
+            button.btn(type="submit") Siparişi Tamamla
+      else
+        p.alert.alert-warning Sepetiniz boş.
